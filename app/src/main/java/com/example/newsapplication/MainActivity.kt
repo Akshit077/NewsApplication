@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     var newsList =  ArrayList<DataModel>()
     private var category:String=""
     private var searchBar:String=""
+    private var final:String=""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +28,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Getting an intent from Home screen
-        val bundle: Bundle? =intent.extras
-        category= bundle?.get("categories") as String
 
-        /*val bundleSearch:Bundle?=intent.extras
-        searchBar=bundleSearch?.get("keywords")as String*/
 
-        createProgressDialog()
+        val bundleSearch=intent
+        if(bundleSearch.getBooleanExtra("check",false))
+        {
+            searchBar= bundleSearch.getStringExtra("keywords").toString()
+            createProgressDialog()
+            setupUI()
+            showSpecificNews()
 
-        setupUI()
+        }
+        else
+        {
+            category= bundleSearch.getStringExtra("categories").toString()
+            createProgressDialog()
+            setupUI()
+            showNews()
+        }
 
-        showNews()
-
-    }
+        }
 
     private fun setupUI() {
         //recycler view
@@ -81,5 +89,29 @@ class MainActivity : AppCompatActivity() {
         progressDialog.setTitle("Loading..")
         progressDialog.setMessage("Please wait while we fetch data..")
         progressDialog.setCancelable(false)
+    }
+    private fun showSpecificNews() {
+
+        progressDialog.show()
+        val call = ApiClient.getClient.getSearchData(KEY, "en",searchBar)
+        call.enqueue(object : Callback<ResponseDataModel> {
+            override fun onResponse(
+                    call: Call<ResponseDataModel>,
+                    response: Response<ResponseDataModel>
+            ) {
+                if (response.isSuccessful) {
+                    newsList.addAll(response.body()?.data ?: ArrayList())
+                    recyclerView.adapter?.notifyDataSetChanged()
+                    Log.e("Data", "Data is ${response.body()}\n\n")
+                }
+                progressDialog.dismiss()
+            }
+
+            override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
+                // progressDialog.dismiss()
+                Log.e("Failure", "Error is ${t.localizedMessage}")
+                showToast("Some Error Occurred while fetching data")
+            }
+        })
     }
 }
