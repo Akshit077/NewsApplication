@@ -13,7 +13,6 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
-        //checkView(view = R.layout.activity_home_screen)
 
         searchNews()
         actionOnImageClick()
@@ -61,51 +60,4 @@ class HomeScreen : AppCompatActivity() {
             startActivity(intentSearchBar)
         })
     }
-
-    fun checkView(view: View) {
-        if(view.id==R.id.news_search_button)
-        {
-            news_search_button.setOnClickListener(View.OnClickListener {
-                val customSearch=search_news.query.toString()
-                Toast.makeText(this,customSearch,Toast.LENGTH_SHORT).show()
-                val intentSearchBar=Intent(this,MainActivity::class.java)
-                intentSearchBar.putExtra("keywords",customSearch)
-                intentSearchBar.putExtra("check",false)
-                startActivity(intentSearchBar)
-            })
-        }
-        else
-        {
-            business.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","business")
-                startActivity(intent)
-            })
-            entertainment.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","entertainment")
-                startActivity(intent)
-            })
-            health.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","health")
-                startActivity(intent)
-            })
-            science.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","science")
-                startActivity(intent)
-            })
-            sports.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","sports")
-                startActivity(intent)
-            })
-            technology.setOnClickListener(View.OnClickListener {
-                val intent=Intent(this,MainActivity::class.java)
-                intent.putExtra("categories","technology")
-                startActivity(intent)
-            })
-        }
     }
-}
