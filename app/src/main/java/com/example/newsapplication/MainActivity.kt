@@ -2,17 +2,20 @@
 package com.example.newsapplication
 
 import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executors
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
 
     private val KEY="e1d980b2f62d44b6d3f2f6b37fcba98c"
     private lateinit var itemAdapter: ItemAdapter
@@ -55,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         //attaching adapter to recycler view
-        itemAdapter = ItemAdapter(this,newsList)
+        itemAdapter = ItemAdapter(this,newsList,this)
         recyclerView.adapter = itemAdapter
     }
 
@@ -72,6 +75,9 @@ class MainActivity : AppCompatActivity() {
                         newsList.addAll(response.body()?.data ?: ArrayList())
                         recyclerView.adapter?.notifyDataSetChanged()
                         Log.e("Data", "Data is ${response.body()}\n\n")
+                        Log.e("Akshit","Title ${response.body()?.data?.get(0)?.title}")
+                        Log.e("Akshit","Desc ${response.body()?.data?.get(0)?.description}")
+                        Log.e("Akshit","Url ${response.body()?.data?.get(0)?.url}")
                     }
                      progressDialog.dismiss()
                 }
@@ -113,5 +119,11 @@ class MainActivity : AppCompatActivity() {
                 showToast("Some Error Occurred while fetching data")
             }
         })
+    }
+
+    override fun onItemClick(position: Int,urladapter:String) {
+        val intent=Intent(this,DetailedNews::class.java)
+        intent.putExtra("get_news_url",urladapter)
+        startActivity(intent)
     }
 }
