@@ -20,7 +20,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">News</string>
+    <string name="title_dashboard">Favourites</string>
     <string name="title_notifications">Notifications</string>
 </resources>
