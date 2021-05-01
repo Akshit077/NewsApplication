@@ -121,9 +121,12 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
         })
     }
 
-    override fun onItemClick(position: Int,urladapter:String) {
+    override fun onItemClick(position: Int,url_adapter:String,
+                             title_adapter:String,desc_adapter:String) {
         val intent=Intent(this,DetailedNews::class.java)
-        intent.putExtra("get_news_url",urladapter)
+        intent.putExtra("get_news_url",url_adapter)
+        intent.putExtra("get_news_title",title_adapter)
+        intent.putExtra("get_news_desc",desc_adapter)
         startActivity(intent)
     }
 }

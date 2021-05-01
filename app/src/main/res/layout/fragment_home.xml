@@ -6,9 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+
+    <ImageView
+        android:id="@+id/favourite_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04"
+        android:src="@drawable/ic_baseline_favorite_24"/>
+
     <WebView
         android:id="@+id/webView"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
+        android:layout_marginTop="50dp"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="8dp"

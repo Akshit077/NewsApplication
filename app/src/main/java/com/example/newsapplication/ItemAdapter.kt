@@ -26,14 +26,18 @@ class ItemAdapter(private val context: Context, private val dataList : List<Data
         override fun onClick(v: View?) {
             val position:Int=adapterPosition
             if(position!=RecyclerView.NO_POSITION) {
-                listener.onItemClick(position,url_adapter = dataList[position].url)
+                listener.onItemClick(position,url_adapter = dataList[position].url,
+                title_adapter = dataList[position].title,
+                desc_adapter = dataList[position].description)
+               // image_adapter = dataList[position].image)
             }
         }
 
     }
     interface OnItemClickListener
     {
-        fun onItemClick(position: Int,url_adapter:String)
+        fun onItemClick(position: Int,url_adapter:String,title_adapter:String,
+                        desc_adapter:String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
