@@ -1,10 +1,12 @@
-package com.example.newsapplication
+package com.example.newsapplication.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapplication.R
+import com.example.newsapplication.database.SavedItemDataClass
 import com.example.newsapplication.ui.dashboard.DashboardFragment
 
 class NewsDetailAdapter(
@@ -21,7 +23,9 @@ class NewsDetailAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater =
             LayoutInflater.from(parent.context).inflate(R.layout.saved_newsdetail, parent, false)
-        return ViewHolder(inflater)
+        return ViewHolder(
+            inflater
+        )
     }
 
     override fun getItemCount():

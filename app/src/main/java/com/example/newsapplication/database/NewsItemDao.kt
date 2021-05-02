@@ -1,4 +1,4 @@
-package com.example.newsapplication
+package com.example.newsapplication.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -11,5 +11,5 @@ interface NewsItemDao {
     fun getNewsDetails(): LiveData<List<SavedItemDataClass>>
 
     @Insert
-    fun insertNewsDetails(user:SavedItemDataClass)
+    fun insertNewsDetails(user: SavedItemDataClass)
 }

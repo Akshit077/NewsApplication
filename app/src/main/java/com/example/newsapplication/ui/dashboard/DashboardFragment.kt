@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsapplication.NewsDetailAdapter
+import com.example.newsapplication.adapter.NewsDetailAdapter
 import com.example.newsapplication.R
-import com.example.newsapplication.SavedItemDataClass
+import com.example.newsapplication.database.SavedItemDataClass
 import com.example.newsapplication.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -51,7 +51,10 @@ class DashboardFragment : Fragment() {
         userViewModel?.user.observe(viewLifecycleOwner, Observer {
             newsList = it as ArrayList<SavedItemDataClass>
             //Log.e("Item", newsList.toString())
-            itemAdapter = NewsDetailAdapter(this, newsList)
+            itemAdapter = NewsDetailAdapter(
+                this,
+                newsList
+            )
             newsDetails_RV.adapter = itemAdapter
             itemAdapter.notifyDataSetChanged()
             Log.e("New", itemAdapter.itemCount.toString())

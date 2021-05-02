@@ -13,6 +13,7 @@
         app:cardElevation="8dp"
         app:cardCornerRadius="50dp"
         android:layout_margin="5dp"
+        android:backgroundTint="#C0C0C0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -28,6 +29,8 @@
                 android:id="@+id/newsTitleTV"
                 android:layout_width="336dp"
                 android:layout_height="36dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:fontFamily="sans-serif-medium"
                 android:hint="News Title"
@@ -39,28 +42,29 @@
 
             <TextView
                 android:id="@+id/newsDescriptionTV"
-                android:layout_width="180dp"
-                android:layout_height="157dp"
-                android:hint="News Description"
+                android:layout_width="250dp"
+                android:layout_height="200dp"
                 android:gravity="center"
+                android:hint="News Description"
+                android:textColor="#e75480"
+                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.159"
+                app:layout_constraintHorizontal_bias="0.148"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/newsTitleTV"
-                app:layout_constraintVertical_bias="0.215" />
+                app:layout_constraintVertical_bias="0.174" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="134dp"
-                android:layout_height="156dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.377"
+                app:layout_constraintHorizontal_bias="0.816"
                 app:layout_constraintStart_toEndOf="@+id/newsDescriptionTV"
                 app:layout_constraintTop_toBottomOf="@+id/newsTitleTV"
-                app:layout_constraintVertical_bias="0.218"
-                />
+                app:layout_constraintVertical_bias="0.3" />
 
             <TextView
                 android:id="@+id/url_news"
@@ -68,6 +72,7 @@
                 android:textColor="#ADD8E6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.534"
                 app:layout_constraintLeft_toLeftOf="parent"

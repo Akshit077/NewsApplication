@@ -9,16 +9,11 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.newsapplication.NewsItemDao
 import com.example.newsapplication.R
-import com.example.newsapplication.SavedItemDataClass
+import com.example.newsapplication.database.SavedItemDataClass
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment(/*private val news:NewsItemDao*/) : Fragment() {

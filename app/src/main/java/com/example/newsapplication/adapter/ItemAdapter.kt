@@ -1,7 +1,6 @@
-package com.example.newsapplication
+package com.example.newsapplication.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.newsapplication.R
+import com.example.newsapplication.api.DataModel
 
-class ItemAdapter(private val context: Context, private val dataList : List<DataModel>,private val listener:OnItemClickListener
+class ItemAdapter(private val context: Context, private val dataList : List<DataModel>, private val listener: OnItemClickListener
                   ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     inner class ViewHolder(view : View): RecyclerView.ViewHolder(view),View.OnClickListener {
 
@@ -52,7 +53,7 @@ class ItemAdapter(private val context: Context, private val dataList : List<Data
 
             Glide.with(context)
                 .load(dataList[position].image)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.previewunavailable)
                 .into(image)
             urldata.text=dataList[position].url
         }

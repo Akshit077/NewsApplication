@@ -1,21 +1,26 @@
 @file:Suppress("DEPRECATION")
-package com.example.newsapplication
+package com.example.newsapplication.activity
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapplication.adapter.ItemAdapter
+import com.example.newsapplication.R
+import com.example.newsapplication.api.ApiClient
+import com.example.newsapplication.api.DataModel
+import com.example.newsapplication.database.ResponseDataModel
+import com.example.newsapplication.extension.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.Executors
 
-class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(),
+    ItemAdapter.OnItemClickListener {
 
     private val KEY="e1d980b2f62d44b6d3f2f6b37fcba98c"
     private lateinit var itemAdapter: ItemAdapter
@@ -24,6 +29,8 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
     private var category:String=""
     private var searchBar:String=""
     private var final:String=""
+    private var languageBar : String = ""
+    private var countryBar : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +44,14 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
         if(bundleSearch.getBooleanExtra("check",false))
         {
             searchBar= bundleSearch.getStringExtra("keywords").toString()
+            //languageBar= intent.getStringExtra("languages").toString()
+            //countryBar=intent.getStringExtra("countries").toString()
+            val pref: SharedPreferences = applicationContext.getSharedPreferences("SharedPrefFile", 0)
+            languageBar= pref.getString("languages", 0.toString()).toString()
+            countryBar=pref.getString("countries",0.toString()).toString()
             createProgressDialog()
             setupUI()
             showSpecificNews()
-
         }
         else
         {
@@ -58,7 +69,8 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
         recyclerView.layoutManager = layoutManager
 
         //attaching adapter to recycler view
-        itemAdapter = ItemAdapter(this,newsList,this)
+        itemAdapter =
+            ItemAdapter(this, newsList, this)
         recyclerView.adapter = itemAdapter
     }
 
@@ -83,9 +95,9 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
                 }
 
                 override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
-                    // progressDialog.dismiss()
+                     progressDialog.dismiss()
                     Log.e("Failure", "Error is ${t.localizedMessage}")
-                    showToast("Some Error Occurred while fetching data")
+                    showToast("Check your internet connection")
                 }
             })
         }
@@ -99,11 +111,11 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
     private fun showSpecificNews() {
 
         progressDialog.show()
-        val call = ApiClient.getClient.getSearchData(KEY, "en",searchBar)
+        val call = ApiClient.getClient.getSearchData(KEY,searchBar,languageBar,countryBar)
         call.enqueue(object : Callback<ResponseDataModel> {
             override fun onResponse(
-                    call: Call<ResponseDataModel>,
-                    response: Response<ResponseDataModel>
+                call: Call<ResponseDataModel>,
+                response: Response<ResponseDataModel>
             ) {
                 if (response.isSuccessful) {
                     newsList.addAll(response.body()?.data ?: ArrayList())
@@ -120,10 +132,61 @@ class MainActivity : AppCompatActivity(),ItemAdapter.OnItemClickListener {
             }
         })
     }
+   /* private fun showCountryWiseNews() {
+        progressDialog.show()
+
+        val call = ApiClient.getClient.getCountryData(KEY , countryBar )
+        //Log.i("ApiClient" , call.toString())
+        call.enqueue(object : Callback<ResponseDataModel>{
+            override fun onResponse(
+                call: Call<ResponseDataModel>,
+                response: Response<ResponseDataModel>
+            ) {
+                if(response.isSuccessful){
+                    newsList.addAll(response.body()?.data ?: ArrayList())
+                    recyclerView.adapter?.notifyDataSetChanged()
+                    Log.e("Data", "Data is ${response.body()}\n\n")
+                }
+                progressDialog.dismiss()
+            }
+
+            override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
+                progressDialog.dismiss()
+                Log.e("Failure","Error is ${t.localizedMessage}")
+                showToast("Some Error Occurred while fetching data")
+            }
+        })
+    }*/
+    /*private fun showLanguageWiseNews() {
+        progressDialog.show()
+
+        val call = ApiClient.getClient.getLanguageData(KEY , languageBar )
+        //Log.i("ApiClient" , call.toString())
+        call.enqueue(object : Callback<ResponseDataModel>{
+            override fun onResponse(
+                call: Call<ResponseDataModel>,
+                response: Response<ResponseDataModel>
+            ) {
+                if(response.isSuccessful){
+                    newsList.addAll(response.body()?.data ?: ArrayList())
+                    recyclerView.adapter?.notifyDataSetChanged()
+                    Log.e("Data", "Data is ${response.body()}\n\n")
+                }
+                progressDialog.dismiss()
+            }
+
+            override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
+                progressDialog.dismiss()
+                Log.e("Failure","Error is ${t.localizedMessage}")
+                showToast("Some Error Occurred while fetching data")
+            }
+        })
+    }*/
 
     override fun onItemClick(position: Int,url_adapter:String,
                              title_adapter:String,desc_adapter:String) {
-        val intent=Intent(this,DetailedNews::class.java)
+        val intent=Intent(this,
+            DetailedNews::class.java)
         intent.putExtra("get_news_url",url_adapter)
         intent.putExtra("get_news_title",title_adapter)
         intent.putExtra("get_news_desc",desc_adapter)

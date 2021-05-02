@@ -1,14 +1,11 @@
 package com.example.newsapplication.ui.home
 
 import android.app.Application
-import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.newsapplication.DatabaseBuilder
-import com.example.newsapplication.DetailedNews
-import com.example.newsapplication.SavedItemDataClass
+import com.example.newsapplication.database.DatabaseBuilder
+import com.example.newsapplication.database.SavedItemDataClass
 import java.util.concurrent.Executors
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {

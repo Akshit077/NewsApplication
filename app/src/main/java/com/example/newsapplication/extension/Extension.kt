@@ -1,4 +1,4 @@
-package com.example.newsapplication
+package com.example.newsapplication.extension
 
 import android.content.Context
 import android.widget.Toast

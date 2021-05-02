@@ -1,4 +1,4 @@
-package com.example.newsapplication
+package com.example.newsapplication.database
 
 import android.content.Context
 import androidx.room.Room
@@ -8,7 +8,10 @@ object DatabaseBuilder {
     fun getInstance(context: Context): AppDatabase {
         if (INSTANCE == null) {
             synchronized(AppDatabase::class) {
-                INSTANCE = buildRoomDB(context)
+                INSTANCE =
+                    buildRoomDB(
+                        context
+                    )
             }
         }
         return INSTANCE!!
