@@ -14,10 +14,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var user: LiveData<List<SavedItemDataClass>> = MutableLiveData()
     private val roomDatabaseBuilder = DatabaseBuilder.getInstance(context)
 
-    /*private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text*/
 
     init {
         // to getAllUserDetails()
@@ -32,7 +28,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     newsId = savedItemDataClass.newsId,
                     newsTitle = savedItemDataClass.newsTitle,
                     newsDescription = savedItemDataClass.newsDescription
-                    //newsImage = savedItemDataClass.newsImage
                 )
             )
         }

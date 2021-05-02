@@ -29,10 +29,7 @@ class DashboardFragment : Fragment() {
 
 
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        /*val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
+
         return root
     }
 
@@ -51,10 +48,7 @@ class DashboardFragment : Fragment() {
         userViewModel?.user.observe(viewLifecycleOwner, Observer {
             newsList = it as ArrayList<SavedItemDataClass>
             //Log.e("Item", newsList.toString())
-            itemAdapter = NewsDetailAdapter(
-                this,
-                newsList
-            )
+            itemAdapter = NewsDetailAdapter(this, newsList)
             newsDetails_RV.adapter = itemAdapter
             itemAdapter.notifyDataSetChanged()
             Log.e("New", itemAdapter.itemCount.toString())

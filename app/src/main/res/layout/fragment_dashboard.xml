@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/white"
     android:background="@color/white"
     tools:context=".ui.dashboard.DashboardFragment">
 
@@ -16,50 +15,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--<androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="50dp"
-        android:layout_margin="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/newsTitleTV"
-                android:layout_width="336dp"
-                android:layout_height="36dp"
-                android:gravity="center"
-                android:fontFamily="sans-serif-medium"
-                android:hint="News Title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.078" />
-
-            <TextView
-                android:id="@+id/newsDescriptionTV"
-                android:layout_width="380dp"
-                android:layout_height="207dp"
-                android:gravity="center"
-                android:textStyle="italic"
-                android:hint="News Description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newsTitleTV"
-                app:layout_constraintVertical_bias="0.555" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

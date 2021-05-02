@@ -26,6 +26,9 @@
     <string name="country">COUNTRY</string>
     <string name="language">LANGUAGE</string>
     <string name="india">India</string>
+    <string name="click_here_to_view_live_news">Click here to view Live News</string>
+    <string name="business">Business</string>
+    <string name="click_on_heart_to_save_news">Click on heart to save news</string>
 
     <string-array name="countries">
         <item>Argentina</item>

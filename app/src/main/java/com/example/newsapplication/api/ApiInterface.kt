@@ -6,6 +6,13 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
+
+    @GET("news")
+    fun getLiveData(
+            @Query("access_key") key : String,
+            @Query("languages") lang: String
+    ):retrofit2.Call<ResponseDataModel>
+
     @GET("news")
     fun getData(
         @Query("access_key") key : String,
@@ -19,15 +26,15 @@ interface ApiInterface {
             @Query("languages")lang:String,
             @Query("countries")country:String
     ):retrofit2.Call<ResponseDataModel>
-    /*@GET("news")
-    fun getLanguageData(
-        @Query("access_key") key : String,
-        @Query("languages") lang: String
-        ):retrofit2.Call<ResponseDataModel>
     @GET("news")
-    fun getCountryData(
-        @Query("access_key") key : String,
-        @Query("countries") country: String
-
-    ):retrofit2.Call<ResponseDataModel>*/
+    fun getCountrySpecificData(
+            @Query("access_key")key:String,
+            @Query("languages")lang:String,
+            @Query("countries")country:String
+    ):retrofit2.Call<ResponseDataModel>
+    @GET("news")
+    fun getLanguageSpecificData(
+            @Query("access_key")key:String,
+            @Query("languages")lang:String
+    ):retrofit2.Call<ResponseDataModel>
 }

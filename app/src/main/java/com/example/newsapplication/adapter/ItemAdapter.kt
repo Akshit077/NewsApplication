@@ -30,7 +30,6 @@ class ItemAdapter(private val context: Context, private val dataList : List<Data
                 listener.onItemClick(position,url_adapter = dataList[position].url,
                 title_adapter = dataList[position].title,
                 desc_adapter = dataList[position].description)
-               // image_adapter = dataList[position].image)
             }
         }
 

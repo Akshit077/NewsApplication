@@ -16,11 +16,9 @@ import com.example.newsapplication.R
 import com.example.newsapplication.database.SavedItemDataClass
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment(/*private val news:NewsItemDao*/) : Fragment() {
+class HomeFragment() : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-
-    //lateinit var user: List<SavedItemDataClass>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,18 +34,11 @@ class HomeFragment(/*private val news:NewsItemDao*/) : Fragment() {
         val data: String? = pref.getString("url_News", null)
         val title_data: String? = pref.getString("title_News", null)
         val description_data: String? = pref.getString("description_News", null)
-        Log.e("HomeFragNews", "Title $title_data")
-        Log.e("HomeFragNews", "Desc $description_data")
 
-       // user=news.getNewsDetails()
-        //Initializing WebView made inside fragment home layout file
+
         val webView: WebView = root.findViewById(R.id.webView)
         val favourite:ImageView=root.findViewById(R.id.favourite_click)
-        /*
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-        textView.text = it
-        })
-        */
+
         //Loading url coming from shared preference in our home fragment
         webView.settings.setJavaScriptEnabled(true)
 

@@ -22,13 +22,12 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity(),
     ItemAdapter.OnItemClickListener {
 
-    private val KEY="e1d980b2f62d44b6d3f2f6b37fcba98c"
+    private val key="e1d980b2f62d44b6d3f2f6b37fcba98c"
     private lateinit var itemAdapter: ItemAdapter
     private lateinit var progressDialog:ProgressDialog
     var newsList =  ArrayList<DataModel>()
     private var category:String=""
     private var searchBar:String=""
-    private var final:String=""
     private var languageBar : String = ""
     private var countryBar : String = ""
 
@@ -39,28 +38,41 @@ class MainActivity : AppCompatActivity(),
 
         //Getting an intent from Home screen
 
-
         val bundleSearch=intent
         if(bundleSearch.getBooleanExtra("check",false))
         {
             searchBar= bundleSearch.getStringExtra("keywords").toString()
-            //languageBar= intent.getStringExtra("languages").toString()
-            //countryBar=intent.getStringExtra("countries").toString()
-            val pref: SharedPreferences = applicationContext.getSharedPreferences("SharedPrefFile", 0)
-            languageBar= pref.getString("languages", 0.toString()).toString()
-            countryBar=pref.getString("countries",0.toString()).toString()
             createProgressDialog()
             setupUI()
             showSpecificNews()
         }
-        else
+        else if(intent.getBooleanExtra("count",false))
+        {
+            countryBar= intent.getStringExtra("country").toString()
+            createProgressDialog()
+            setupUI()
+            showCountrySpecificNews()
+        }
+        else if(intent.getBooleanExtra("lang",false))
+        {
+            languageBar= intent.getStringExtra("language").toString()
+            createProgressDialog()
+            setupUI()
+            showLanguageSpecificNews()
+        }
+        else if(intent.getBooleanExtra("cat",false))
         {
             category= bundleSearch.getStringExtra("categories").toString()
             createProgressDialog()
             setupUI()
             showNews()
         }
-
+        else
+        {
+            createProgressDialog()
+            setupUI()
+            liveNewsShow()
+        }
         }
 
     private fun setupUI() {
@@ -77,7 +89,7 @@ class MainActivity : AppCompatActivity(),
     private fun showNews() {
 
         progressDialog.show()
-            val call = ApiClient.getClient.getData(KEY, "en",category)
+            val call = ApiClient.getClient.getData(key, "en",category)
             call.enqueue(object : Callback<ResponseDataModel> {
                 override fun onResponse(
                     call: Call<ResponseDataModel>,
@@ -86,10 +98,6 @@ class MainActivity : AppCompatActivity(),
                     if (response.isSuccessful) {
                         newsList.addAll(response.body()?.data ?: ArrayList())
                         recyclerView.adapter?.notifyDataSetChanged()
-                        Log.e("Data", "Data is ${response.body()}\n\n")
-                        Log.e("Akshit","Title ${response.body()?.data?.get(0)?.title}")
-                        Log.e("Akshit","Desc ${response.body()?.data?.get(0)?.description}")
-                        Log.e("Akshit","Url ${response.body()?.data?.get(0)?.url}")
                     }
                      progressDialog.dismiss()
                 }
@@ -111,7 +119,7 @@ class MainActivity : AppCompatActivity(),
     private fun showSpecificNews() {
 
         progressDialog.show()
-        val call = ApiClient.getClient.getSearchData(KEY,searchBar,languageBar,countryBar)
+        val call = ApiClient.getClient.getSearchData(key,searchBar,languageBar,countryBar)
         call.enqueue(object : Callback<ResponseDataModel> {
             override fun onResponse(
                 call: Call<ResponseDataModel>,
@@ -132,56 +140,75 @@ class MainActivity : AppCompatActivity(),
             }
         })
     }
-   /* private fun showCountryWiseNews() {
+    private fun liveNewsShow()
+    {
         progressDialog.show()
-
-        val call = ApiClient.getClient.getCountryData(KEY , countryBar )
-        //Log.i("ApiClient" , call.toString())
-        call.enqueue(object : Callback<ResponseDataModel>{
+        val call = ApiClient.getClient.getLiveData(key, "en")
+        call.enqueue(object : Callback<ResponseDataModel> {
             override fun onResponse(
-                call: Call<ResponseDataModel>,
-                response: Response<ResponseDataModel>
+                    call: Call<ResponseDataModel>,
+                    response: Response<ResponseDataModel>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     newsList.addAll(response.body()?.data ?: ArrayList())
                     recyclerView.adapter?.notifyDataSetChanged()
-                    Log.e("Data", "Data is ${response.body()}\n\n")
                 }
                 progressDialog.dismiss()
             }
 
             override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
                 progressDialog.dismiss()
-                Log.e("Failure","Error is ${t.localizedMessage}")
-                showToast("Some Error Occurred while fetching data")
+                Log.e("Failure", "Error is ${t.localizedMessage}")
+                showToast("Check your internet connection")
             }
         })
-    }*/
-    /*private fun showLanguageWiseNews() {
+    }
+    private fun showCountrySpecificNews()
+    {
         progressDialog.show()
-
-        val call = ApiClient.getClient.getLanguageData(KEY , languageBar )
-        //Log.i("ApiClient" , call.toString())
-        call.enqueue(object : Callback<ResponseDataModel>{
+        val call = ApiClient.getClient.getCountrySpecificData(key, "en",countryBar)
+        call.enqueue(object : Callback<ResponseDataModel> {
             override fun onResponse(
-                call: Call<ResponseDataModel>,
-                response: Response<ResponseDataModel>
+                    call: Call<ResponseDataModel>,
+                    response: Response<ResponseDataModel>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     newsList.addAll(response.body()?.data ?: ArrayList())
                     recyclerView.adapter?.notifyDataSetChanged()
-                    Log.e("Data", "Data is ${response.body()}\n\n")
                 }
                 progressDialog.dismiss()
             }
 
             override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
                 progressDialog.dismiss()
-                Log.e("Failure","Error is ${t.localizedMessage}")
-                showToast("Some Error Occurred while fetching data")
+                Log.e("Failure", "Error is ${t.localizedMessage}")
+                showToast("Check your internet connection")
             }
         })
-    }*/
+    }
+    private fun showLanguageSpecificNews()
+    {
+        progressDialog.show()
+        val call = ApiClient.getClient.getLanguageSpecificData(key,languageBar)
+        call.enqueue(object : Callback<ResponseDataModel> {
+            override fun onResponse(
+                    call: Call<ResponseDataModel>,
+                    response: Response<ResponseDataModel>
+            ) {
+                if (response.isSuccessful) {
+                    newsList.addAll(response.body()?.data ?: ArrayList())
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+                progressDialog.dismiss()
+            }
+
+            override fun onFailure(call: Call<ResponseDataModel>, t: Throwable) {
+                progressDialog.dismiss()
+                Log.e("Failure", "Error is ${t.localizedMessage}")
+                showToast("Check your internet connection")
+            }
+        })
+    }
 
     override fun onItemClick(position: Int,url_adapter:String,
                              title_adapter:String,desc_adapter:String) {

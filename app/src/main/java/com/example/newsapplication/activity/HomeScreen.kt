@@ -1,8 +1,6 @@
 package com.example.newsapplication.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,17 +13,16 @@ class HomeScreen : AppCompatActivity() {
 
     private var countryValue = ""
     private var languageValue = ""
-    private val sharedPrefUse="SharedPrefFile"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefUse, Context.MODE_PRIVATE)
-        val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+
+        liveNews()
         searchNews()
         actionOnImageClick()
-        inflateCountriesDropDownData(editor)
-        inflateLanguageDropDownData(editor)
+        inflateCountriesDropDownData()
+        inflateLanguageDropDownData()
     }
 
     private fun searchNews() {
@@ -50,32 +47,37 @@ class HomeScreen : AppCompatActivity() {
         entertainment.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("categories", "entertainment")
+            intent.putExtra("cat",true)
             startActivity(intent)
         })
         health.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("categories", "health")
+            intent.putExtra("cat",true)
             startActivity(intent)
         })
         science.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("categories", "science")
+            intent.putExtra("cat",true)
             startActivity(intent)
         })
         sports.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("categories", "sports")
+            intent.putExtra("cat",true)
             startActivity(intent)
         })
         technology.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("categories", "technology")
+            intent.putExtra("cat",true)
             startActivity(intent)
         })
     }
 
 
-    private fun inflateCountriesDropDownData(editor:SharedPreferences.Editor) {
+    private fun inflateCountriesDropDownData() {
         val countries = resources.getStringArray(R.array.countries)
         val arrayAdapter =
             ArrayAdapter(applicationContext,
@@ -144,29 +146,19 @@ class HomeScreen : AppCompatActivity() {
                     "Venuzuela" -> countryValue = "ve"
                 }
             }
-            editor.putString("countries",countryValue)
-            editor.apply()
-
-            /*val intentCountryBar = Intent(this, MainActivity::class.java)
-            intentCountryBar.putExtra("countries", countryValue)
-            intentCountryBar.putExtra("checkCountry", true)
-//            intentCategoryBar.putExtra("flag" , 3)
-            startActivity(intentCountryBar)
-            showToast(
-                "$countrySelected" +
-                        " Country is Selected"
-            )*/
+            val intent=Intent(this,MainActivity::class.java)
+            intent.putExtra("country",countryValue)
+            intent.putExtra("count",true)
+            startActivity(intent)
         }
 
     }
 
-    private fun inflateLanguageDropDownData(editor: SharedPreferences.Editor) {
+    private fun inflateLanguageDropDownData() {
         val languages = resources.getStringArray(R.array.languages)
         val arrayAdapter = ArrayAdapter(applicationContext,
             R.layout.dropdown_item_lang, languages)
         autoCompleteTextView_Languages.setAdapter(arrayAdapter)
-
-        //Log.i("languages" , "$languages")
 
         //to retrieve selected data
         autoCompleteTextView_Languages.setOnItemClickListener { parent, view, position, id ->
@@ -191,20 +183,16 @@ class HomeScreen : AppCompatActivity() {
                     "Chinese" -> languageValue = "zh"
                 }
             }
-            editor.putString("languages",languageValue)
-            editor.apply()
-            editor.commit()
-
-            /*val intentLanguageBar = Intent(this, MainActivity::class.java)
-            intentLanguageBar.putExtra("languages", languageValue)
-            intentLanguageBar.putExtra("checkLanguage", true)
-//            intentLanguageBar.putExtra("flag" , 2)
-            startActivity(intentLanguageBar)
-
-            showToast(
-                "$languageSelected " +
-                        " Language is Selected"
-            )*/
+            val intent=Intent(this,MainActivity::class.java)
+            intent.putExtra("language",languageValue)
+            intent.putExtra("lang",true)
+            startActivity(intent)
         }
+    }
+    private fun liveNews()
+    {
+        live_news.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this,MainActivity::class.java))
+        })
     }
 }

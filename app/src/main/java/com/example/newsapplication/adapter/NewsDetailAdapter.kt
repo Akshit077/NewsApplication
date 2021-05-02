@@ -10,10 +10,10 @@ import com.example.newsapplication.database.SavedItemDataClass
 import com.example.newsapplication.ui.dashboard.DashboardFragment
 
 class NewsDetailAdapter(
-    private val context: DashboardFragment,
-    private val newsDataset: ArrayList<SavedItemDataClass>):
+
+        newsdataSet1: DashboardFragment,
+        private val newsdataSet: ArrayList<SavedItemDataClass>):
     RecyclerView.Adapter<NewsDetailAdapter.ViewHolder>() {
-   // private val TAG = "UserDetailAdapter"
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.newsTitleTV)
@@ -29,12 +29,12 @@ class NewsDetailAdapter(
     }
 
     override fun getItemCount():
-            Int = newsDataset.size
+            Int = newsdataSet.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            title.text = newsDataset[position].newsTitle
-            desc.text = newsDataset[position].newsDescription
+            title.text = newsdataSet[position].newsTitle
+            desc.text = newsdataSet[position].newsDescription
 
         }
     }

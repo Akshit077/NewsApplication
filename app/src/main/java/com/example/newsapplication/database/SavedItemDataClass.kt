@@ -12,6 +12,4 @@ data class SavedItemDataClass(
     val newsTitle: String?,
     @ColumnInfo(name = "news_description")
     val newsDescription: String?
-    //@ColumnInfo(name = "news_Image")
-   // val newsImage: String?
 )
